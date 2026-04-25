@@ -1,11 +1,11 @@
-# Mạnh Quân Solar Local ⚡
+# Local Mạnh Quân Solar ⚡
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
-[![GitHub Release](https://img.shields.io/github/v/release/loctrantv/ha_mq_solar_local?style=for-the-badge)](https://github.com/loctrantv/ha_mq_solar_local/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/loctrantv/ha_local_mqsolar?style=for-the-badge)](https://github.com/loctrantv/ha_local_mqsolar/releases)
 
 Đây là Integration chính thức không dùng Cloud (hoạt động 100% trong mạng Local) dành cho Home Assistant, hỗ trợ các bị Mạch Sạc MPPT và Thiết bị Hoà Lưới (Inverter) của thương hiệu **Mạnh Quân Solar**.
 
-Chỉ mất 5 giây cài đặt để kéo toàn bộ thông số, biểu đồ, lượng điện vôn/ampe và số liệu KWh vào trực tiếp bảng điều khiển Home Assistant thông qua giao thức API cực kì nhẹ, tốc độ làm mới liên tục **mỗi 1 giây**.
+Chỉ mất 5 giây cài đặt để kéo toàn bộ thông số, biểu đồ, lượng điện vôn/ampe và số liệu KWh vào trực tiếp bảng điều khiển Home Assistant tốc độ làm mới liên tục **mỗi 1 giây**.
 
 ## ✨ Tính năng chính
 
@@ -24,14 +24,14 @@ Bằng cách cài thông qua [HACS](https://hacs.xyz/), bạn sẽ luôn tự đ
 2. Chọn mục **Integrations**.
 3. Bấm vào nút `3 chấm vạch dọc` ở góc trên bên phải màn hình và chọn **Custom repositories** (Kho lưu trữ tùy chỉnh).
 4. Dán URL bên dưới vào ô Repository:
-   > `https://github.com/loctrantv/ha_mq_solar_local`
+   > `https://github.com/loctrantv/ha_local_mqsolar`
 5. Chọn Category/Danh mục là **Integration**. Bấm **ADD**.
 6. Gõ chữ "Mạnh Quân" vào thanh tìm kiếm của HACS và tiến hành bấm **Download** tải về bản mới nhất.
 7. Bạn cần **Khởi động lại (Restart)** Home Assistant để hệ thống nạp mã thư viện mới.
 
 ## 🗂️ Cài đặt thủ công
 1. Tải về gói `.zip` mã nguồn hoặc clone repository này.
-2. Copy toàn bộ thư mục `custom_components/mq_solar` vào bên trong thư mục `custom_components` của Home Assistant nhà bạn. (Đường dẫn cuối cùng sẽ ở dạng: `/config/custom_components/mq_solar`)
+2. Copy toàn bộ thư mục `custom_components/local_mqsolar` vào bên trong thư mục `custom_components` của Home Assistant nhà bạn. (Đường dẫn cuối cùng sẽ ở dạng: `/config/custom_components/local_mqsolar`)
 3. Khởi động lại Home Assistant.
 
 ---
@@ -61,21 +61,21 @@ Bằng cách cài thông qua [HACS](https://hacs.xyz/), bạn sẽ luôn tự đ
 | Charging Power (Công suất sạc) | `W` | `power` |
 | Energy Today (Đã sạc hôm nay) | `kWh` | `energy` |
 | Energy Total (Tổng đo sạc tích lũy) | `kWh` | `energy` |
-| Nhiệt độ máy | `°C` | `temperature` |
-| Trạng thái máy (VD: IDLE, CHARGING) | `Text` | `None` |
+| Nhiệt độ sạc | `°C` | `temperature` |
+| Trạng thái sạc (VD: IDLE, CHARGING) | `Text` | `None` |
 
 ### Đối với Inverter Hòa Lưới
 | Giá trị hiển thị | Đơn vị tính | Device Class |
 | :--- | :--- | :--- |
 | DC Voltage (Điện áp DC đầu vào) | `V` | `voltage` |
 | AC Voltage (Điện áp lưới) | `V` | `voltage` |
-| Output Power (Công suất phát lưới) | `W` | `power` |
-| Limiter Power (Công suất Limiter/Bám tải) | `W` | `power` |
-| Limiter Today (Năng lượng tiêu thụ hôm nay) | `kWh` | `energy` |
-| Limiter Total (Tổng Limiter tích luỹ) | `kWh` | `energy` |
-| Temperature (Nhiệt độ board) | `°C` | `temperature` |
-| Energy Today (Năng lượng phát hôm nay) | `kWh` | `energy` |
-| Energy Total (Tổng điện năng tích luỹ) | `kWh` | `energy` |
+| Output Power (Công suất hòa lưới) | `W` | `power` |
+| Grid Power (Công suất lấy lưới) | `W` | `power` |
+| Grid Today (Lấy lưới hôm nay) | `kWh` | `energy` |
+| Grid Total (Tổng lấy lưới tích luỹ) | `kWh` | `energy` |
+| Temperature (Nhiệt độ) | `°C` | `temperature` |
+| Energy Today (Hòa lưới hôm nay) | `kWh` | `energy` |
+| Energy Total (Tổng hòa lưới tích luỹ) | `kWh` | `energy` |
 | Trạng thái Inverter | `Text` | `None` |
 
 ---
@@ -88,4 +88,4 @@ Bằng cách cài thông qua [HACS](https://hacs.xyz/), bạn sẽ luôn tự đ
 Mọi ý kiến đóng góp cũng như các vấn đề phát sinh lỗi vặt cần giải đáp, vui lòng tạo Request ở trang Tab Issues.
 Rất nhiều tính năng hỗ trợ, đóng góp code từ phía người dùng đều được hoan nghênh nồng nhiệt!
 
-© Copyright 2026. Made with ❤️ by Mạnh Quân Solar Ecosystem.
+© Copyright 2026. Made with ❤️ by fb.com/loctrantv for Mạnh Quân Solar Ecosystem.
