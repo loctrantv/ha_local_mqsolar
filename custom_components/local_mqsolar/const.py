@@ -1,0 +1,1 @@
+DOMAIN = "mq_solar"
