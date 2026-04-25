@@ -1,1 +1,1 @@
-DOMAIN = "mq_solar"
+DOMAIN = "local_mqsolar"
