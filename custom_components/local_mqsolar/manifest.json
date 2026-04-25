@@ -1,5 +1,5 @@
 {
-  "domain": "ha_local_mqsolar",
+  "domain": "local_mqsolar",
   "name": "Mạnh Quân Solar Local",
   "config_flow": true,
   "documentation": "https://github.com/loctrantv/ha_local_mqsolar",
