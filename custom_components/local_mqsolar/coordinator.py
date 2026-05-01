@@ -32,8 +32,8 @@ class MQSolarCoordinator(DataUpdateCoordinator):
                 # Nếu chưa connect thì thử connect
                 if not self.api._ws or self.api._ws.closed:
                     await self.api.connect()
-                # Trả về toàn bộ data các thiết bị
-                return self.api.data
+                # Trả về toàn bộ data các thiết bị (trả về copy để HA nhận biết sự thay đổi)
+                return dict(self.api.data)
             else:
                 return await self.api.fetch_data()
         except Exception as err:

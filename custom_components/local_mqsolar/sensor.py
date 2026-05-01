@@ -1,3 +1,4 @@
+import logging
 from homeassistant.components.sensor import (
     SensorEntity,
     SensorDeviceClass,
@@ -13,12 +14,17 @@ from homeassistant.const import (
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import DOMAIN, MODE_CLOUD
 
+_LOGGER = logging.getLogger(__name__)
+
 async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    
+    added_devices = set()
+
     def get_entities_for_device(device_data, device_id):
         entities = []
         device_type = device_data.get("_device_type", "MQSolar")
+        
+        _LOGGER.info("Creating entities for device %s (%s)", device_id, device_type)
         
         device_info = {
             "identifiers": {(DOMAIN, device_id)},
@@ -27,7 +33,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
             "model": device_type,
         }
         
-        # Determine if cloud or local to pass device_id to sensor
         d_id = device_id if coordinator.mode == MODE_CLOUD else None
 
         if "charger" in device_data:
@@ -57,17 +62,33 @@ async def async_setup_entry(hass, entry, async_add_entities):
             ])
         return entities
 
-    if coordinator.mode == MODE_CLOUD:
-        all_entities = []
-        for dev_id, dev_data in coordinator.data.items():
-            all_entities.extend(get_entities_for_device(dev_data, dev_id))
-        if all_entities:
-            async_add_entities(all_entities)
-    else:
-        # Local mode
-        if coordinator.data:
-            device_id = coordinator.data.get("_device_id", "unknown")
-            async_add_entities(get_entities_for_device(coordinator.data, device_id))
+    def update_entities():
+        """Check for new devices and add them."""
+        new_entities = []
+        
+        if coordinator.mode == MODE_CLOUD:
+            if not coordinator.data:
+                _LOGGER.debug("No cloud data available yet to discover devices")
+                return
+                
+            for dev_id, dev_data in coordinator.data.items():
+                if dev_id not in added_devices:
+                    _LOGGER.info("Discovered new cloud device: %s", dev_id)
+                    new_entities.extend(get_entities_for_device(dev_data, dev_id))
+                    added_devices.add(dev_id)
+        else:
+            if coordinator.data and "local" not in added_devices:
+                device_id = coordinator.data.get("_device_id", "unknown")
+                _LOGGER.info("Setting up local device: %s", device_id)
+                new_entities.extend(get_entities_for_device(coordinator.data, device_id))
+                added_devices.add("local")
+                
+        if new_entities:
+            _LOGGER.info("Adding %d new entities", len(new_entities))
+            async_add_entities(new_entities)
+
+    entry.async_on_unload(coordinator.async_add_listener(update_entities))
+    update_entities()
 
 class MQSolarSensor(CoordinatorEntity, SensorEntity):
     def __init__(self, coordinator, device_info, key, name, unit, device_class, data_key, device_id=None, state_class=SensorStateClass.MEASUREMENT):
