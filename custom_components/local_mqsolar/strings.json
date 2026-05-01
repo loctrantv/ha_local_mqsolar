@@ -7,7 +7,7 @@
         "menu_options": {
           "manual": "Enter IP Address manually",
           "scan": "Scan local network",
-          "cloud": "Connect via Cloud (WebSocket)"
+          "cloud": "Connect via Cloud"
         }
       },
       "manual": {

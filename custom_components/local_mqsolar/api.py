@@ -119,7 +119,7 @@ class MQSolarCloudClient:
         url = f"wss://api.manhquansolar.io.vn/ws?token={self.token}"
         try:
             self._ws = await self.session.ws_connect(url, heartbeat=30)
-            _LOGGER.info("Connected to MQ Solar Cloud WebSocket")
+            _LOGGER.info("Connected to MQ Solar Cloud")
             
             # Subscribe
             subscribe_msg = {

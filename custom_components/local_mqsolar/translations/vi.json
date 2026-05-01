@@ -7,7 +7,7 @@
         "menu_options": {
           "manual": "Nhập IP thủ công",
           "scan": "Quét mạng nội bộ",
-          "cloud": "Kết nối qua Cloud (WebSocket)"
+          "cloud": "Kết nối qua Cloud"
         }
       },
       "manual": {
