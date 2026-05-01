@@ -119,11 +119,11 @@ class MQSolarConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return self.async_abort(reason="no_devices_found")
             self._discovered_devices = {}
             for ip, info in discovered.items():
-                dtype = info.get('device_type', 'Thiết bị')
-                if dtype.lower() == "charger":
-                    dtype = "Sạc MPPT"
-                elif dtype.lower() == "inverter":
+                dtype_raw = info.get('device_type')
+                if str(dtype_raw) == "1":
                     dtype = "Inverter"
+                else:
+                    dtype = "Sạc MPPT"
                 self._discovered_devices[ip] = f"{dtype} ({ip})"
         
         return self.async_show_form(
