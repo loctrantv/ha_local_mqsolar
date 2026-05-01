@@ -6,7 +6,8 @@
         "description": "Chọn phương thức thêm thiết bị",
         "menu_options": {
           "manual": "Nhập IP thủ công",
-          "scan": "Quét mạng nội bộ"
+          "scan": "Quét mạng nội bộ",
+          "cloud": "Kết nối qua Cloud (WebSocket)"
         }
       },
       "manual": {
@@ -19,6 +20,13 @@
         "title": "Các thiết bị tìm thấy",
         "data": {
           "host": "Chọn thiết bị"
+        }
+      },
+      "cloud": {
+        "title": "Cài đặt Cloud",
+        "data": {
+          "token": "Mã Token API",
+          "devices": "Danh sách Device ID (cách nhau bởi dấu phẩy)"
         }
       }
     },
