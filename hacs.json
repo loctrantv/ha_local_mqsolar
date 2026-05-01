@@ -1,5 +1,5 @@
 {
-  "name": "Mạnh Quân Solar Local",
+  "name": "Mạnh Quân Solar",
   "render_readme": true,
   "iot_class": "Local Polling",
   "domain": "local_mqsolar",

@@ -2,24 +2,24 @@
   "config": {
     "step": {
       "user": {
-        "title": "Mạnh Quân Solar",
-        "description": "Choose setup method",
+        "title": "Manh Quan Solar",
+        "description": "Select a method to add a device",
         "menu_options": {
-          "manual": "Enter IP Address manually",
+          "manual": "Enter IP manually",
           "scan": "Scan local network",
           "cloud": "Connect via Cloud"
         }
       },
       "manual": {
-        "title": "Manual Setup",
+        "title": "Manual IP Entry",
         "data": {
-          "host": "IP Address or Hostname"
+          "host": "IP address or hostname"
         }
       },
       "scan": {
         "title": "Discovered Devices",
         "data": {
-          "host": "Select Device"
+          "host": "Select device"
         }
       },
       "cloud": {
@@ -31,11 +31,11 @@
       }
     },
     "error": {
-      "cannot_connect": "Failed to connect",
-      "no_devices_found": "No device found on local network"
+      "cannot_connect": "Cannot connect to the device",
+      "no_devices_found": "No devices found on the network"
     },
     "abort": {
-      "already_configured": "Device is already configured",
+      "already_configured": "This device has already been added",
       "no_devices_found": "No devices found on the network"
     }
   }

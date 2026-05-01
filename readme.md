@@ -1,4 +1,4 @@
-# Local Mạnh Quân Solar ⚡
+# Mạnh Quân Solar ⚡
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 [![GitHub Release](https://img.shields.io/github/v/release/loctrantv/ha_local_mqsolar?style=for-the-badge)](https://github.com/loctrantv/ha_local_mqsolar/releases)
