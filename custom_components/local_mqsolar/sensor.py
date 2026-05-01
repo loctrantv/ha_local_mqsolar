@@ -24,11 +24,15 @@ async def async_setup_entry(hass, entry, async_add_entities):
         entities = []
         device_type = device_data.get("_device_type", "MQSolar")
         
-        _LOGGER.info("Creating entities for device %s (%s)", device_id, device_type)
+        # Thêm hậu tố Cloud vào tên nếu là kết nối cloud
+        mode_label = "Cloud" if coordinator.mode == MODE_CLOUD else "Local"
+        
+        _LOGGER.info("Creating %s entities for device %s (%s)", mode_label, device_id, device_type)
         
         device_info = {
-            "identifiers": {(DOMAIN, device_id)},
-            "name": f"MQ {device_type} {device_id}",
+            # Sử dụng mode trong identifiers để tránh trùng lặp thiết bị giữa Local và Cloud
+            "identifiers": {(DOMAIN, f"{device_id}_{coordinator.mode}")},
+            "name": f"MQ {device_type} {device_id} ({mode_label})",
             "manufacturer": "Mạnh Quân",
             "model": device_type,
         }
@@ -68,23 +72,19 @@ async def async_setup_entry(hass, entry, async_add_entities):
         
         if coordinator.mode == MODE_CLOUD:
             if not coordinator.data:
-                _LOGGER.debug("No cloud data available yet to discover devices")
                 return
                 
             for dev_id, dev_data in coordinator.data.items():
                 if dev_id not in added_devices:
-                    _LOGGER.info("Discovered new cloud device: %s", dev_id)
                     new_entities.extend(get_entities_for_device(dev_data, dev_id))
                     added_devices.add(dev_id)
         else:
             if coordinator.data and "local" not in added_devices:
                 device_id = coordinator.data.get("_device_id", "unknown")
-                _LOGGER.info("Setting up local device: %s", device_id)
                 new_entities.extend(get_entities_for_device(coordinator.data, device_id))
                 added_devices.add("local")
                 
         if new_entities:
-            _LOGGER.info("Adding %d new entities", len(new_entities))
             async_add_entities(new_entities)
 
     entry.async_on_unload(coordinator.async_add_listener(update_entities))
